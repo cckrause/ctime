@@ -109,7 +109,7 @@ export function add(t, val, unit) {
  * @returns {number} difference in seconds
  */
 export function diff(t1, t2) {
-    return ~~((time(t2) - time(t1)) / 1e3);
+    return Math.abs(Math.round((time(t2) - time(t1)) / 1e3));
 }
 
 export function format(val, formatCb) {
@@ -151,7 +151,7 @@ const ctime = (t, f) => {
     api.set = afunc(set, api);
     api.add = afunc(add, api);
     api.subtract = afunc(subtract, api);
-    api.diff = afunc(diff, api, /*assignTime*/false, true);
+    api.diff = afunc(diff, api, /*assignTime*/false, /*close*/true);
     api.time = afunc(time, api, /*assignTime*/true, /*close*/true);
     api.format = afunc(format, api,/*assignTime*/false, /*close*/true);
     api.toString = () => api._f && api._f() || format(api._t, (_time) => _time.utc);
