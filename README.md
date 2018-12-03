@@ -2,15 +2,33 @@
 
 A light library that provides a minimal function set to manipulate dates in Javascript.
 
-* 977bytes ✅
+* 986bytes ✅
 * unix-timestamp and unix-timestamp+ms support ✅
 * fluent interface ✅
 * immutable ❌ 
 
-## Usage
+## API
 
 ```js
 ctime().add(30, 'days').subtract(1, 'year').format((time) => time.utc)
+```
+
+## ES6 Module
+
+```js
+import {date, time, format} from 'ctime';
+
+// now time
+time()
+
+// init with unix
+date(534236400) // native date object
+
+// init with unix+ms
+date(534236400000) // native date object
+
+// Man takes first steps on the Moon
+format(-14159040, (date) => date.utc) // "1969-07-21T02:56:00.000Z"
 ```
 
 ## ctime?

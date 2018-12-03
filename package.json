@@ -1,6 +1,6 @@
 {
   "name": "ctime",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "Christian Krause <chris+ctime@christiankrause.de>",
   "license": "MIT",
   "description": "light but powerful timestamp and date manipulation library",
@@ -65,7 +65,8 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "sinon": "^4.4.2",
     "sinon-chai": "^3.0.0",
-    "uglify-js": "^2.7.5"
+    "uglify-js": "^2.7.5",
+    "webpack": "^4.26.1"
   },
   "bundlesize": [
     {
