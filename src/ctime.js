@@ -114,12 +114,13 @@ export function diff(t1, t2) {
 
 export function format(val, formatCb) {
     const d = date(val);
+
     return formatCb({
         utc: d.toISOString(),
         tz: d.getTimezoneOffset(),
         year: d.getFullYear(),
         month: d.getMonth() + 1, // 0-index shift
-        day: d.getDay(), 
+        day: d.getDate(), 
         hour: d.getHours(), 
         minute: d.getMinutes(), 
         seconds: d.getSeconds(), 
