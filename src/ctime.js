@@ -9,13 +9,16 @@ const
 /**
  * Converts a utc datetime string | unix-timestamp(+ms) to a date object.
  * @param {string|number|date} utc date time string, unix-timestamp, native date object
- * @returns {number} seconds since 1970
+ * @returns {object} date instance
  */
 export function date(val) {
     let date;
+    const isObj = typeof val === 'object';
 
-    if (typeof t === 'object' && t.getDate) // date instance
+    if (isObj && val.getDate) // date instance
         return val;
+    else if (isObj && val._t) // ctime instance
+        return new Date(val._t);
 
     if (typeof val === 'number') { // propably unix-timestamp
         // return new Date(val);
