@@ -20,7 +20,7 @@ ctime().add(30, 'days').subtract(1, 'year').format((time) => time.utc)
 import {date, time, format} from 'ctime';
 
 // now time
-time()
+time() // 1543826404199 (2018-12-03T08:40:04.199Z)
 
 // init with unix
 date(534236400) // native date object
