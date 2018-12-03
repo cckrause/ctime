@@ -1,6 +1,6 @@
 {
   "name": "ctimejs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Christian Krause <chris+ctime@christiankrause.de>",
   "license": "MIT",
   "description": "light but powerful timestamp and date manipulation library",
