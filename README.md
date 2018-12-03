@@ -1,12 +1,12 @@
 # ctime
 
-A light library that provides a minimal function set to manipulate dates in Javascript.
+A light library that provides a minimal function set to manipulate dates and timestamps in Javascript.
 
 * 133bytes (ES6 function set) 🤩
 * 986bytes (ctime fluent interface) ✅
 * unix-timestamp and unix-timestamp+ms support ✅
 * fluent interface ✅
-* immutable ❌ 
+* immutable (ctime fluent interface is not right now) 
 
 ## API
 
@@ -14,7 +14,21 @@ A light library that provides a minimal function set to manipulate dates in Java
 ctime().add(30, 'days').subtract(1, 'year').format((time) => time.utc)
 ```
 
+- ctime
+    - time
+    - set
+    - add
+    - subtract
+    - format
+
 ## ES6 Module
+
+- date
+- time
+- set
+- add
+- subtract
+- format
 
 ```js
 import {date, time, format} from 'ctime';
@@ -33,6 +47,6 @@ format(-14159040, (date) => date.utc) // "1969-07-21T02:56:00.000Z"
 ```
 
 ## ctime?
-The name was inspired by the C Programming Language function `ctime` https://en.wikipedia.org/wiki/C_date_and_time_functions. C code is known for for being fast and efficient but also for its dangerous sides, which suits the handling of date objects in JS in my opinion.
+The name was inspired by the C Programming Language function [`ctime`](https://en.wikipedia.org/wiki/C_date_and_time_functions "Wikipedia C Date and Time Functions"). C code is known for for being fast and efficient but also for its dangerous sides, which suits the handling of date objects in JS in my opinion.
 
-made with 💙 in cologne!
+made with 💙 in cologne.
