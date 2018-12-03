@@ -18,7 +18,7 @@
     "test:karma": "karma start tests/karma.conf.js --single-run",
     "test:karma:watch": "npm run test:karma -- no-single-run",
     "version": "./version.sh",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push origin master && git push origin master --tags"
   },
   "keywords": [
     "date",
