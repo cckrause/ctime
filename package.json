@@ -16,7 +16,7 @@
     "test:size": "bundlesize",
     "test": "npm-run-all --parallel test:karma",
     "test:karma": "karma start tests/karma.conf.js --single-run",
-    "test:karma:watch": "npm run test:karma -- no-single-run",
+    "test:karma:watch": "npm run test:karma --no-single-run",
     "version": "./version.sh",
     "prepublishOnly": "npm run build",
     "postversion": "git push origin master && git push origin master --tags"
