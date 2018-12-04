@@ -1,4 +1,4 @@
-# ctime
+# ctime [![Build Status](https://travis-ci.org/cckrause/ctime.svg?branch=master)](https://travis-ci.org/cckrause/ctime)
 
 A light library that provides a minimal function set to manipulate dates and timestamps in Javascript.
 
