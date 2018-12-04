@@ -8,6 +8,12 @@ A light library that provides a minimal function set to manipulate dates and tim
 * fluent interface ✅
 <!-- * immutable (ctime fluent interface is not right now)  -->
 
+## Install via NPM
+
+```
+$ npm install ctimejs
+```
+
 ## API
 
 ```js
