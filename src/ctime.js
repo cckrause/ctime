@@ -178,7 +178,7 @@ const ctime = (t, f) => {
     api.set = afunc(set, api);
     api.add = afunc(add, api);
     api.subtract = afunc(subtract, api);
-    api.startOf = afunc(startOf, api);
+    api.startOf = afunc(startOf, api, /*assignTime*/true);
     api.diff = afunc(diff, api, /*assignTime*/false, /*close*/true);
     api.time = afunc(time, api, /*assignTime*/true, /*close*/true);
     api.format = afunc(format, api,/*assignTime*/false, /*close*/true);
