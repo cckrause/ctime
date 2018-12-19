@@ -1,6 +1,6 @@
-### [0.2.0] 2018-12-03
+### [0.3.0] 2018-12-19
 #### Features
-- `startOf`: implements function to reset date to a specific time
+- `startOf`: implements function to reset date to a specific timeunit
 ### [0.2.0] 2018-12-03
 #### Fixes
 - `date`: caused init new now timestamp in case passing in a ctime date object
