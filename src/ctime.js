@@ -51,6 +51,33 @@ export function date(val) {
 }
 
 /**
+ * Resets our cTime to the beginning of a given unit
+ * @param {string} unitString to be set, unix-timestamp, native date object
+ * @returns {object} date instance
+ */
+export function startOf(t, unit) {
+    const d = date(t);
+    switch (unit) {
+        case 'year':
+            d.setMonth(0);
+        case 'month':
+            d.setDate(1);
+        case 'midnight':
+        case 'day':
+            d.setHours(0);
+        case 'hour':
+            d.setMinutes(0);
+        case 'minute':
+            d.setSeconds(0);
+        case 'second':
+            d.setMilliseconds(0);
+        default:
+    }
+
+    return d.getTime();
+}
+
+/**
  * Converts a utc datetime string | date object to a unix-timestamp. Milliseconds 
  * accuracy can be disabled with the ms flag.
  * @param {string|number|date} utc date time string, unix-timestamp, native date object
@@ -151,6 +178,7 @@ const ctime = (t, f) => {
     api.set = afunc(set, api);
     api.add = afunc(add, api);
     api.subtract = afunc(subtract, api);
+    api.startOf = afunc(startOf, api);
     api.diff = afunc(diff, api, /*assignTime*/false, /*close*/true);
     api.time = afunc(time, api, /*assignTime*/true, /*close*/true);
     api.format = afunc(format, api,/*assignTime*/false, /*close*/true);

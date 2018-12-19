@@ -1,4 +1,7 @@
 ### [0.2.0] 2018-12-03
+#### Features
+- `startOf`: implements function to reset date to a specific time
+### [0.2.0] 2018-12-03
 #### Fixes
 - `date`: caused init new now timestamp in case passing in a ctime date object
 - `format`: day param was a weekday number not a month day number
