@@ -1,4 +1,4 @@
-### [0.3.0] 2018-12-19
+### [0.3.0] NEXT
 #### Features
 - `startOf`: implements function to reset date to a specific timeunit
 ### [0.2.0] 2018-12-03
