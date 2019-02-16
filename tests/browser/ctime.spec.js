@@ -12,24 +12,6 @@ describe('ctime', () => {
         expect(ct.set).to.be.a('function');
     });
 
-    // TODO: implement more input formats
-
-    // NOT SUPPORTED: 2018-03-05T02:08:00+0100 (missing ms part)
-    xit('FIXME: init with UTC string: `2018-03-05T02:08:00+0100`', () => {
-        const expected = expectedDateAsUTCString(/*year*/2018, /*month*/3, /*day*/5, /*hour*/2, /*minute*/8, /*second*/0, /*ms*/177, /*utcOffset*/1);
-        expect(ctime('2018-03-05T02:08:00+0100').toString()).to.equal(expected);
-    });
-
-    it('init with UTC string: `2018-03-05T02:08:00.177+0100`', () => {
-        const expected = expectedDateAsUTCString(/*year*/2018, /*month*/3, /*day*/5, /*hour*/2, /*minute*/8, /*second*/0, /*ms*/177, /*utcOffset*/1);
-        expect(ctime('2018-03-05T02:08:00.177+0100').toString()).to.equal(expected);
-    });
-
-    it('init with UTC string: `2018-03-05T02:08:00.0+0100`', () => {
-        const expected = expectedDateAsUTCString(/*year*/2018, /*month*/3, /*day*/5, /*hour*/2, /*minute*/8, /*second*/0, /*ms*/0, /*utcOffset*/1);
-        expect(ctime('2018-03-05T02:08:00.0+0100').toString()).to.equal(expected);
-    });
-
     it('init with unix-timestamp', () => {
         const expected = expectedDateAsUTCString(/*year*/2018, /*month*/12, /*day*/2, /*hour*/17, /*minute*/22, /*second*/40, /*ms*/0, /*utcOffset*/1);
         expect(ctime(1543767760).toString()).to.equal(expected);

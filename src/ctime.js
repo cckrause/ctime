@@ -6,6 +6,9 @@ const
     monthUnit = ['month', 'months'],
     yearUnit = ['year', 'years'];
 
+// match time part of UTC strings in various expressions <HH:mm:ss>|<HH:mm:ssZ>
+const tRegex = /(?<h>2[0-3]|[01][0-9]):(?<m>[0-5][0-9]):(?<s>[0-5][0-9])(?<ms>\.[0-9]+)?(?<z>Z|[+-](?:2[0-3]|[01][0-9])(?::?(?:[0-5][0-9]))?)?/;
+
 /**
  * Converts a utc datetime string | unix-timestamp(+ms) to a date object.
  * @param {string|number|date} utc date time string, unix-timestamp, native date object
@@ -27,24 +30,40 @@ export function date(val) {
         return new Date(isUnix ? val * 1e3 : val);
     }
 
-    //FIXME: 2018-03-05T02:08:00+0100 leads to a params shift because of the missing ms
     if (typeof val === 'string') { // UTC datetime string parsing
-        const d = val.split(/[^0-9]/);
-        date = new Date(
-            d[0], //year
-            d[1] - 1, // month (0-index shift for month)
-            d[2], // day
-            d[3], // hour
-            d[4], // minute
-            d[5], // second
-        );
+        date = parseDateTimeString(val);
 
-        // ms
-        d[6] && date.setMilliseconds(d[6]);
-        // if UTC offset is defined
-        d[7] && date.setUTCHours(parseInt(d[7]) / 100);
     } else { // simple now-timestamp implementation (according local time)
         date = new Date();
+    }
+
+    return date;
+}
+
+export function parseDateTimeString(val) {
+    let date;
+    const d = val.split(/[^0-9]/);
+    const tm = val.match(tRegex);
+    const tmg = tm.groups;
+
+    let tz = undefined;
+
+    if (tmg.z) // set Zulu tz (UTC-0) in case z is present in string
+        tz = tmg.z.toLowerCase() === 'z' ? 0 : (tmg.z.replace(':', '') / 100);
+
+    date = new Date(Date.UTC(
+        d[0], //year
+        d[1] - 1, // month (0-index shift for month)
+        d[2], // day
+        tz !== undefined ? (tmg.h - tz) : 0, // hour with tz offset
+        tmg.m || 0, // minute
+        tmg.s || 0, // second
+        tmg.ms && tmg.ms.replace('.', '') || 0
+    ));
+    
+    if (tz === undefined) { // fallback to local time if no utc tz is defined
+        date.setHours(tmg.h);
+        date.setDate(d[2]);
     }
 
     return date;
@@ -69,10 +88,6 @@ export function set(t, val, unit, rel=false) {
 
     // probably better to init a new instance with new Date(Date.UTC(year, month, ...))
     // for size sake
-
-    // its save to shift units ms - hours by timestamp
-    // ex. new Date(1543787732412 + (60 * 60 * 1000 * (24 * 120)))
-    // that would be another thing to optimize
 
     if (unit === 'ms')
         d.setMilliseconds(val + (rel ? d.getMilliseconds() : 0));
