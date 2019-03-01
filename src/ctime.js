@@ -7,7 +7,7 @@ const
     yearUnit = ['year', 'years'];
 
 // match time part of UTC strings in various expressions <HH:mm:ss>|<HH:mm:ssZ>
-const tRegex = /(?<h>2[0-3]|[01][0-9]):(?<m>[0-5][0-9]):(?<s>[0-5][0-9])(?<ms>\.[0-9]+)?(?<z>Z|[+-](?:2[0-3]|[01][0-9])(?::?(?:[0-5][0-9]))?)?/;
+const tRegex = /(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z|[+-](?:2[0-3]|[01][0-9])(?::?(?:[0-5][0-9]))?)?/;
 
 /**
  * Converts a utc datetime string | unix-timestamp(+ms) to a date object.
@@ -44,25 +44,29 @@ export function parseDateTimeString(val) {
     let date;
     const d = val.split(/[^0-9]/);
     const tm = val.match(tRegex);
-    const tmg = tm.groups;
+    // tm[1]; // h
+    // tm[2]; // m
+    // tm[3]; // s
+    // tm[4]; // ms
+    // tm[5]; // tz
 
     let tz = undefined;
 
-    if (tmg.z) // set Zulu tz (UTC-0) in case z is present in string
-        tz = tmg.z.toLowerCase() === 'z' ? 0 : (tmg.z.replace(':', '') / 100);
+    if (tm[5]) // set Zulu tz (UTC-0) in case z is present in string
+        tz = tm[5].toLowerCase() === 'z' ? 0 : (tm[5].replace(':', '') / 100);
 
     date = new Date(Date.UTC(
         d[0], //year
         d[1] - 1, // month (0-index shift for month)
         d[2], // day
-        tz !== undefined ? (tmg.h - tz) : 0, // hour with tz offset
-        tmg.m || 0, // minute
-        tmg.s || 0, // second
-        tmg.ms && tmg.ms.replace('.', '') || 0
+        tz !== undefined ? (tm[1] - tz) : 0, // hour with tz offset
+        tm[2] || 0, // minute
+        tm[3] || 0, // second
+        tm[4] && tm[4].replace('.', '') || 0
     ));
     
     if (tz === undefined) { // fallback to local time if no utc tz is defined
-        date.setHours(tmg.h);
+        date.setHours(tm[1]);
         date.setDate(d[2]);
     }
 
