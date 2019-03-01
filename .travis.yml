@@ -29,4 +29,4 @@ script:
     COVERAGE=false FLAKEY=false PERFORMANCE=false ALLOW_SAUCELABS=true npm run test:karma;
     fi
 
-# ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info;
+./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info;
