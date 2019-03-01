@@ -1,5 +1,6 @@
 ### NEXT
 #### Features
+- Immutability
 - `parseDateTimeString`: Implements a better parser for ISO8601 standard
 
 #### Fixes
