@@ -149,15 +149,13 @@ export function format(val, formatCb) {
 
 function afunc (f, api, assignTime=true, close=false) {
     return function(...args) {
-        const r = f.apply(null, [api._t].concat(args));
-
-        if (assignTime)
-            api._t = r;
+        const t = f.apply(null, [api._t].concat(args));
+        const immutableApi = ctime((assignTime ? t : api._t), api._f);
 
         if (close)
-            return assignTime ? api._t : r;
+            return t;
 
-        return api;
+        return immutableApi;
     };
 }
 
