@@ -6,9 +6,10 @@ A light library that provides a minimal function set to manipulate dates and tim
 
 <!-- * 133bytes (ES6 function set) 🤩 -->
 * [![gzip size](http://img.badgesize.io/https://unpkg.com/ctimejs/dist/ctime.min.js?compression=gzip)](https://unpkg.com/ctimejs/dist/ctime.min.js)
-* unix-timestamp and unix-timestamp+ms support ✅
+* unix-timestamp ✅
+* unix-timestamp+ms ✅
 * fluent interface ✅
-<!-- * immutable (ctime fluent interface is not right now)  -->
+* immutable ✅
 
 ## Install via npm
 
@@ -23,12 +24,27 @@ ctime().add(30, 'days').subtract(1, 'year').format((time) => time.utc)
 ```
 
 - ctime
-    - time
-    - set
-    - add
-    - subtract
-    - diff
-    - format
+    - time ✅
+    - set ✅
+    - add ✅
+    - subtract ✅
+    - diff ✅
+    - format ✅
+    - startOf 🔜
+    - endOf 🔜
+
+## Supported ISO8601 Formats
+
+```
+2008-08-30T01:45:36
+2018-03-05T01:45:36Z
+2018-03-05T01:45:36.999
+2018-03-05T01:45:36.999Z
+2018-03-05T01:45:36.999+0100
+2018-03-05T01:45:36.999+07:00
+2018-03-05T03:08:02.177+0100
+```
+
 
 <!-- ## ES6 Module
 

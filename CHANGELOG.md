@@ -1,6 +1,15 @@
-### [0.3.0] NEXT
+### NEXT
 #### Features
 - `startOf`: implements function to reset date to a specific timeunit
+
+### [0.3.0]
+#### Features
+- Immutability
+- `parseDateTimeString`: Implements a better parser for ISO8601 standard
+
+#### Fixes
+- `date`: Fixes datetime string parsing. Timezones where twisted with ms in some ISO8601 expressions
+
 ### [0.2.0] 2018-12-03
 #### Fixes
 - `date`: caused init new now timestamp in case passing in a ctime date object
@@ -12,19 +21,20 @@
 ### [0.1.0] 2018-12-03
 initial version comes with of a pure functional solution and a fluent interface (mutable data right now :().
 
-#### fluent interface
-- ctime
+- fluent interface
+    - time
+    - set
+    - add
+    - startOf
+    - subtract
+    - format
+
+
+- functional interface
+    - date
     - time
     - set
     - add
     - subtract
     - format
-
-
-#### functional interface
-- date
-- time
-- set
-- add
-- subtract
-- format
+    - startOf
