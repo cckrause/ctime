@@ -1,4 +1,4 @@
-### NEXT
+### [0.3.0] 2019-05-21
 #### Features
 - `startOf`
 - `endOf`: implements functions to reset date to a specific time unit.
