@@ -1,4 +1,4 @@
-### NEXT
+### [0.3.1] 2019-05-23
 #### Fixes
 - npm security audit, solves a lot of security vulnerabilities in dependencies.
 
