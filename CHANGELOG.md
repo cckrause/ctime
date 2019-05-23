@@ -1,3 +1,7 @@
+### NEXT
+#### Fixes
+- npm security audit, solves a lot of security vulnerabilities in dependencies.
+
 ### [0.3.0] 2019-05-21
 #### Features
 - `startOf`
