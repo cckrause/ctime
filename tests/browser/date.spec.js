@@ -14,7 +14,7 @@ describe('date', () => {
     for (const str of ISO8601) {
         it(`should parse ISO8601 string ${str}`, () => {
             const ct = date(str);
-            expect(ct.toISOString()).to.equal(new Date(str).toISOString());
+            expect(ct.toISOString()).toEqual(new Date(str).toISOString());
         });
     }
 });

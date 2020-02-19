@@ -15,7 +15,7 @@ const utcStringTests = [
 describe('utils (helper for test purposes)', () => {
     for (const test of utcStringTests) {
         it(`expectedDateAsUTCString should return string ${test[1]}`, () => {
-            expect(test[0]).to.equal(test[1]);
+            expect(test[0]).toEqual(test[1]);
         });
     }
 });

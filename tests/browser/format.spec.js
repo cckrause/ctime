@@ -23,16 +23,16 @@ describe('format', () => {
             format(test[0], (d) => {
                 const _expectedDate = expectedDate(test[2], test[3], test[4], test[5], test[6], test[7], test[8], test[1]);
 
-                expect(d.utc).to.equal(test[0]); // ctime should always return the correct UTC time
+                expect(d.utc).toEqual(test[0]); // ctime should always return the correct UTC time
                 // as ctime is using relative system tz we test for that
-                expect(d.tz).to.equal(_expectedDate.getTimezoneOffset());
-                expect(d.year).to.equal(_expectedDate.getFullYear());
-                expect(d.month).to.equal(_expectedDate.getMonth() + 1);
-                expect(d.day).to.equal(_expectedDate.getDate());
-                expect(d.hour).to.equal(_expectedDate.getHours());
-                expect(d.minute).to.equal(test[6]);
-                expect(d.second).to.equal(test[7]);
-                expect(d.ms).to.equal(test[8]);
+                expect(d.tz).toEqual(_expectedDate.getTimezoneOffset());
+                expect(d.year).toEqual(_expectedDate.getFullYear());
+                expect(d.month).toEqual(_expectedDate.getMonth() + 1);
+                expect(d.day).toEqual(_expectedDate.getDate());
+                expect(d.hour).toEqual(_expectedDate.getHours());
+                expect(d.minute).toEqual(test[6]);
+                expect(d.second).toEqual(test[7]);
+                expect(d.ms).toEqual(test[8]);
 
             });
         });

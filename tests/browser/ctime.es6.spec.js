@@ -7,7 +7,7 @@ describe('ctime (functional)', () => {
         const nowt = time();
         const expected = (new Date()).getTime();
 
-        expect(nowt).to.equal(expected);
+        expect(nowt).toEqual(expected);
     });
 
     it('set year (unit:year) (Dec 3th 2018) to (Dec 3th 1986)', () => {
@@ -25,7 +25,7 @@ describe('ctime (functional)', () => {
             /*ms*/199, 
             /*utcOffset*/1);
 
-        expect(ts).to.equal(expected);
+        expect(ts).toEqual(expected);
     });
 
     // FIXME: add all set tests

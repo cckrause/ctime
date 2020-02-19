@@ -1,10 +1,7 @@
-# ctime [![Build Status](https://travis-ci.org/cckrause/ctime.svg?branch=master)](https://travis-ci.org/cckrause/ctime)
-
-[![ctimejs](https://saucelabs.com/browser-matrix/cckrause.svg)](https://saucelabs.com/u/cckrause)
+# ctime
 
 A light library that provides a minimal function set to manipulate dates and timestamps in Javascript.
 
-<!-- * 133bytes (ES6 function set) 🤩 -->
 * [![gzip size](http://img.badgesize.io/https://unpkg.com/ctimejs/dist/ctime.min.js?compression=gzip)](https://unpkg.com/ctimejs/dist/ctime.min.js)
 * unix-timestamp ✅
 * unix-timestamp+ms ✅

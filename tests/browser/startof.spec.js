@@ -17,7 +17,7 @@ describe('startOf (fluent interface)', () => {
                 const expected = timeUnits[key];
                 const ct = ctime('2018-03-05T02:08:02.177+0100')
                     .startOf(key);
-                expect(ct.toString()).to.equal(expected);
+                expect(ct.toString()).toEqual(expected);
             });
         }
     }
