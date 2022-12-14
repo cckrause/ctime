@@ -9,15 +9,16 @@
   "dev:main": "dist/ctime.dev.js",
   "minified:main": "dist/ctime.min.js",
   "scripts": {
-    "compile:main": "esbuild src/ctime.iife.js --outfile=dist/ctime.min.js --bundle --format=iife --minify --target=es2015",
-    "compile:dev": "esbuild src/ctime.js --outfile=dist/ctime.dev.js --bundle --target=es2015",
+    "compile:minifed": "esbuild src/ctime.js --outfile=dist/ctime.min.js --format=iife --minify --target=es2016",
+    "compile:main": "esbuild src/ctime.js --outfile=dist/ctime.js --format=iife --target=es2016",
+    "compile:dev": "esbuild src/ctime.js --outfile=dist/ctime.dev.js --format=iife --target=es2016",
     "size": "node -e \"process.stdout.write('gzip size: ')\" && gzip-size --raw dist/ctime.min.js",
-    "build": "run-s --silent compile:main compile:dev size",
+    "build": "run-s --silent compile:main compile:dev compile:minifed size",
     "test:size": "bundlesize",
     "test": "npx jest",
     "test:watch": "npx jest --watch",
     "version": "./version.sh",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "run-s build",
     "postversion": "git push origin master && git push origin master --tags"
   },
   "keywords": [
