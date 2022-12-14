@@ -20,7 +20,7 @@ export function date(val, legacyUnixTimestamp = false) {
     else if (isObj && val._t) // ctime instance
         return new Date(val._t);
 
-    if (typeof val === 'number') { // expecting a unix-timestamp including ms (also supports legacy unit timestamps)
+    if (typeof val === 'number') { // expecting a unix-timestamp including ms (also supports legacy unix timestamps)
         return new Date(legacyUnixTimestamp ? val * 1e3 : val);
     }
 
@@ -162,7 +162,11 @@ export function add(t, val, unit) {
 }
 
 /**
- * Diffs two dateish input values
+ * Diffs two dates
+ * WARNING: This function is only working with modern timestamp+ms. to make it work with 
+ * legacy unix timestamps wrap ctime() around each parameter which by default is 
+ * initializing with legacy timestamps. 
+ * (this is indented behaviour for backwards compability)
  * @param {string|number|date} utc date time string, unix-timestamp, native date object
  * @returns {number} difference in seconds
  */
@@ -207,6 +211,10 @@ function afunc (f, api, assignTime=true, close=false) {
  * @returns {number}
  */
 const ctime = (timeReference, modifier = true) => { // this modifier api design was probably a bad idea (first param should only have one purpose)
+    if (timeReference === null) {
+        timeReference = undefined;
+    }
+
     const api = {_t: time(timeReference, false, typeof modifier === 'boolean' ? modifier : undefined), _f: null}; // chain ref
 
     if (modifier && typeof modifier === 'function') {
