@@ -1,5 +1,5 @@
 import ctime from 'ctime';
-import {expectedDateAsUTCString, expectedDate} from './utils';
+import {expectedDateAsUTCString} from './utils';
 
 describe('subtract (fluent interface)', () => {
     it('subtract days (Mar 5th 2018 - 10days) should shift to (Feb 23th 2018)', () => {

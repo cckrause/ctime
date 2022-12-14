@@ -6,15 +6,12 @@ const
     monthUnit = ['month', 'months'],
     yearUnit = ['year', 'years'];
 
-// match time part of UTC strings in various expressions <HH:mm:ss>|<HH:mm:ssZ>
-const tRegex = /(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z|[+-](?:2[0-3]|[01][0-9])(?::?(?:[0-5][0-9]))?)?/;
-
 /**
  * Converts a utc datetime string | unix-timestamp(+ms) to a date object.
  * @param {string|number|date} utc date time string, unix-timestamp, native date object
  * @returns {object} date instance
  */
-export function date(val) {
+export function date(val, legacyUnixTimestamp = false) {
     let date;
     const isObj = typeof val === 'object';
 
@@ -23,50 +20,14 @@ export function date(val) {
     else if (isObj && val._t) // ctime instance
         return new Date(val._t);
 
-    if (typeof val === 'number') { // propably unix-timestamp
-        // return new Date(val);
-        const isUnix = val % 1 === 0 && (val+'').length <= 10; // old unix timestamp
-        // console.log('timestsamp', isUnix, val)
-        return new Date(isUnix ? val * 1e3 : val);
+    if (typeof val === 'number') { // expecting a unix-timestamp including ms (also supports legacy unix timestamps)
+        return new Date(legacyUnixTimestamp ? val * 1e3 : val);
     }
 
-    if (typeof val === 'string') { // UTC datetime string parsing
-        date = parseDateTimeString(val);
+    if (typeof val === 'string') { // native date string parsing
+        date = new Date(val);
     } else { // simple now-timestamp implementation (according local time)
         date = new Date();
-    }
-
-    return date;
-}
-
-export function parseDateTimeString(val) {
-    let date;
-    const d = val.split(/[^0-9]/);
-    const tm = val.match(tRegex);
-    // tm[1]; // h
-    // tm[2]; // m
-    // tm[3]; // s
-    // tm[4]; // ms
-    // tm[5]; // tz
-
-    let tz = undefined;
-
-    if (tm[5]) // set Zulu tz (UTC-0) in case z is present in string
-        tz = tm[5].toLowerCase() === 'z' ? 0 : (tm[5].replace(':', '') / 100);
-
-    date = new Date(Date.UTC(
-        d[0], //year
-        d[1] - 1, // month (0-index shift for month)
-        d[2], // day
-        tz !== undefined ? (tm[1] - tz) : 0, // hour with tz offset
-        tm[2] || 0, // minute
-        tm[3] || 0, // second
-        tm[4] && tm[4].replace('.', '') || 0
-    ));
-    
-    if (tz === undefined) { // fallback to local time if no utc tz is defined
-        date.setHours(tm[1]);
-        date.setDate(d[2]);
     }
 
     return date;
@@ -103,7 +64,7 @@ export function timeBoundaryShift(t, unit, start=true) {
  * @param {string} unitString to be set, unix-timestamp, native date object
  * @returns {object} date instance
  */
-export function startOf(t, unit) {
+export function startOf(t, unit) {
     return timeBoundaryShift(t, unit);
 }
 
@@ -119,15 +80,17 @@ export function endOf(t, unit) {
 /**
  * Converts a utc datetime string | date object to a unix-timestamp. Milliseconds 
  * accuracy can be disabled with the ms flag.
- * @param {string|number|date} utc date time string, unix-timestamp, native date object
+ * @param {string|number|date} val utc date time string, unix-timestamp, native date object
+ * @param {boolean} toLegacyUnixTimestamp converts to legacy unix timestamp
+ * @param {boolean} fromLegacyUnixTimestamp allows using legacy unix timestamp
  * @returns {number} seconds since 1970
  */
-export function time(val, unix=false) {
-    const t = date(val).getTime();
-    return unix ? ~~(t / 1e3) : t;
+export function time(val, toLegacyUnixTimestamp=false, fromLegacyUnixTimestamp=false) {
+    const t = date(val, fromLegacyUnixTimestamp).getTime();
+    return toLegacyUnixTimestamp ? ~~(t / 1e3) : t;
 }
 
-export function unix(val) {
+export function unix(val) {
     return time(val, true);
 }
 
@@ -199,7 +162,11 @@ export function add(t, val, unit) {
 }
 
 /**
- * Diffs two dateish input values
+ * Diffs two dates
+ * WARNING: This function is only working with modern timestamp+ms. to make it work with 
+ * legacy unix timestamps wrap ctime() around each parameter which by default is 
+ * initializing with legacy timestamps. 
+ * (this is indented behaviour for backwards compability)
  * @param {string|number|date} utc date time string, unix-timestamp, native date object
  * @returns {number} difference in seconds
  */
@@ -236,11 +203,23 @@ function afunc (f, api, assignTime=true, close=false) {
     };
 }
 
-const ctime = (t, f) => {
-    const api = {_t: time(t), _f: null}; // chain ref
 
-    if (f)
-        api._f = () => format(api._t, f);
+/**
+ * Initialize a ctime date
+ * @param {string|date}  timeReference
+ * @param {function|boolean} modifier formatter function or unix legacy timestamp toggle (default: true)
+ * @returns {number}
+ */
+const ctime = (timeReference, modifier = true) => { // this modifier api design was probably a bad idea (first param should only have one purpose)
+    if (timeReference === null) {
+        timeReference = undefined;
+    }
+
+    const api = {_t: time(timeReference, false, typeof modifier === 'boolean' ? modifier : undefined), _f: null}; // chain ref
+
+    if (modifier && typeof modifier === 'function') {
+        api._f = () => format(api._t, modifier);
+    }
 
     api.set = afunc(set, api);
     api.get = afunc(get, api, /*assignTime*/false, /*close*/true);
