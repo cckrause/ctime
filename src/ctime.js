@@ -238,4 +238,4 @@ const ctime = (timeReference, modifier = true) => { // this modifier api design 
 
 export default ctime;
 
-if ('undefined' != typeof module) module.exports = ctime; else self.ctime = ctime;
+if ('undefined' != typeof module) { module.exports ? module.exports = ctime : undefined; } else {self.ctime = ctime;}
